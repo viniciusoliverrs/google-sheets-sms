@@ -7,10 +7,9 @@
 </h2>
 <pre>
 // Spreadsheet column names mapped to 0-based index numbers. 
-var TIME_ENTERED = 0;
-var PHONE_NUMBER = 1;
-var MESSAGE = 2;
-var STATUS = 3;
+var PHONE_NUMBER = 0;
+var MESSAGE = 1;
+var STATUS = 2;
 
 function onOpen() {
     var ui = SpreadsheetApp.getUi();
