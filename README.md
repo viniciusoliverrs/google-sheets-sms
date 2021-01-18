@@ -1,15 +1,33 @@
-Create a table in Google Excel with the following columns: phone number, message body, status. Code for table:
+Create a table in Google Excel with the following columns: phone number, message body, status. 
 
-// Spreadsheet column names mapped to 0-based index numbers. var TIME_ENTERED = 0; var PHONE_NUMBER = 1; var MESSAGE = 2; var STATUS = 3;
+Code for table:
 
-function onOpen() { var ui = SpreadsheetApp.getUi(); ui.createMenu('Send SMS') .addItem('Send to all', 'sendSmsToAll') .addToUi(); };
+// Spreadsheet column names mapped to 0-based index numbers. 
+var TIME_ENTERED = 0;
+var PHONE_NUMBER = 1;
+var MESSAGE = 2;
+var STATUS = 3;
 
-function sendSmsToAll() { var sheet = SpreadsheetApp.getActiveSheet(); var rows = sheet.getDataRange().getValues();
+function onOpen() {
+    var ui = SpreadsheetApp.getUi();
+    ui.createMenu('Send SMS').addItem('Send to all', 'sendSmsToAll').addToUi();
+};
 
-// The shift method removes the first row and saves it into headers. var headers = rows.shift();
+function sendSmsToAll() {
+    var sheet = SpreadsheetApp.getActiveSheet();
+    var rows = sheet.getDataRange().getValues();
 
-// Try to send an SMS to every row and save their status. rows.forEach(function(row) { row[STATUS] = sendSms(row[PHONE_NUMBER], row[MESSAGE]); });
+    // The shift method removes the first row and saves it into headers. var headers = rows.shift();
 
-// Write the entire data back into the sheet. sheet.getRange(2, 1, rows.length, headers.length).setValues(rows); }
+    // Try to send an SMS to every row and save their status. rows.forEach(function(row) { row[STATUS] = sendSms(row[PHONE_NUMBER], row[MESSAGE]); });
 
-function sendSms(phoneNumber, message) { try { var response = UrlFetchApp.fetch("http://yourdomain.com.br/sendsms/sendMessage.php?message="+message+"&telephone="+phoneNumber); return response.getResponseCode() == 200 ? "OK" : "ERRO" } catch(e){ return "ERRO"; } }
+    // Write the entire data back into the sheet. sheet.getRange(2, 1, rows.length, headers.length).setValues(rows); }
+
+    function sendSms(phoneNumber, message) {
+        try {
+            var response = UrlFetchApp.fetch("http://yourdomain.com.br/SendSmsWithTwilio/sendSms.php?message=" + message + "&telephone=" + phoneNumber);
+            return response.getResponseCode() == 200 ? "OK" : "ERRO"
+        } catch (e) {
+            return "ERRO";
+        }
+    }
