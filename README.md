@@ -1,8 +1,10 @@
 <p>
     Create a table in Google Excel with the following columns: phone number, message body, status. 
-    Add a script: Tools > Script editor
 </p>
-<h2>Code for table:</h2>
+<h2>
+    Add a script using following way: Tools > Script editor<br>
+    Add the following code below to the table:
+</h2>
 <pre>
 // Spreadsheet column names mapped to 0-based index numbers. 
 var TIME_ENTERED = 0;
@@ -23,17 +25,20 @@ function sendSmsToAll() {
     var headers = rows.shift();
 
     // Try to send an SMS to every row and save their status. 
-    rows.forEach(function(row) { row[STATUS] = sendSms(row[PHONE_NUMBER], row[MESSAGE]); });
+    rows.forEach(function(row) {
+        row[STATUS] = sendSms(row[PHONE_NUMBER], row[MESSAGE]);
+    });
 
     // Write the entire data back into the sheet. 
-    sheet.getRange(2, 1, rows.length, headers.length).setValues(rows); }
+    sheet.getRange(2, 1, rows.length, headers.length).setValues(rows);
+}
 
-    function sendSms(phoneNumber, message) {
-        try {
-            var response = UrlFetchApp.fetch("http://yourdomain.com.br/SendSmsWithTwilio/sendSms.php?message=" + message + "&telephone=" + phoneNumber);
-            return response.getResponseCode() == 200 ? "OK" : "ERRO"
-        } catch (e) {
-            return "ERRO";
-        }
+function sendSms(phoneNumber, message) {
+    try {
+        var response = UrlFetchApp.fetch("http://yourdomain.com.br/SendSmsWithTwilio/sendSms.php?message=" + message + "&telephone=" + phoneNumber);
+        return response.getResponseCode() == 200 ? "OK" : "ERRO"
+    } catch (e) {
+        return "ERRO";
     }
+}
 </pre>
