@@ -1,5 +1,7 @@
 Create a table in Google Excel with the following columns: phone number, message body, status. 
 
+Add a script: Tools > Script editor
+
 Code for table:
 
 // Spreadsheet column names mapped to 0-based index numbers. 
